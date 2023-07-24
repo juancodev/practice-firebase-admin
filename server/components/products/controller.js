@@ -18,7 +18,33 @@ function getProducts() {
   });
 };
 
+function updateProduct(id, changeProduct) {
+  return new Promise(async (resolve, reject) => {
+    if (!id || !changeProduct) {
+      console.log('[updateProduct] Error Data');
+      reject('Data invalid in method patch');
+    };
+
+    const result = await store.update(id, changeProduct);
+    resolve(result);
+  });
+}
+
+function deleteProduct(id) {
+  return new Promise(async (resolve, reject) => {
+    if (!id) {
+      console.log('[deleteProduct] Error Data');
+      reject('Data invalid in method delete');
+    };
+
+    const result = await store.delete(id);
+    resolve(result);
+  });
+}
+
 module.exports = {
   addProduct,
-  getProducts
+  getProducts,
+  updateProduct,
+  deleteProduct,
 }
