@@ -9,4 +9,10 @@ router.post('/', (req, res) => {
     .catch((error) => response.error(req, res, 'Internal Error', 500, error));
 });
 
+router.get('/', (req, res) => {
+  controller.getUsers()
+    .then((user) => response.success(req, res, user, 200))
+    .catch((error) => response.error(req, res, 'Internal Error', 500, error));
+})
+
 module.exports = router;

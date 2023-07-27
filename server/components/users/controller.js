@@ -14,6 +14,20 @@ function addUser(userData) {
   });
 };
 
+function getUsers(emailUser) {
+  return new Promise((resolve, reject) => {
+    resolve(
+      store.list(emailUser)
+      .then((getUsersResult) => {
+        // getUsersResult.users.map(userRecord => console.log(userRecord))
+        return getUsersResult.users;
+      })
+      .catch(error => console.log(error))
+    );
+  })
+}
+
 module.exports = {
   addUser,
+  getUsers,
 }
