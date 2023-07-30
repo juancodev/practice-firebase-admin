@@ -11,7 +11,12 @@ async function getProducts() {
     console.log(doc.id);
   });
   // snapshot.docs.map((product) => console.log(product.data().category.path));
-  return snapshot.docs.map((product) => product.data());
+  return snapshot.docs.map((product) => {
+    return {
+      id: product.id,
+      product: product.data()
+    }
+  });
 }
 
 async function updateProduct(id, change) {
