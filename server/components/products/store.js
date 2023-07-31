@@ -5,13 +5,35 @@ async function addProduct(product) {
   return await docRef.add(product);
 }
 
-async function getProducts() {
+async function getAllProducts() {
   const snapshot = await db.collection('products').get();
   snapshot.forEach((doc) => {
     console.log(doc.id);
   });
   // snapshot.docs.map((product) => console.log(product.data().category.path));
-  return snapshot.docs.map((product) => product.data());
+  return snapshot.docs.map((product) => {
+    return {
+      id: product.id,
+      product: product.data()
+    }
+  });
+}
+
+async function getOnlyProduct(title) {
+  const productReference = db.collection('products');
+  const snapshot = await productReference.where('title', '==', title).get();
+
+  if (snapshot.empty) {
+    console.error('No matching!!');
+    return;
+  }
+
+  return snapshot.docs.map((product) => {
+    return {
+      id: product.id,
+      product: product.data()
+    }
+  })
 }
 
 async function updateProduct(id, change) {
@@ -30,7 +52,8 @@ async function deleteProduct(id) {
 
 module.exports = {
   add: addProduct,
-  list: getProducts,
+  list: getAllProducts,
+  only: getOnlyProduct,
   update: updateProduct,
   delete: deleteProduct,
 }

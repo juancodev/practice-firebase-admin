@@ -18,6 +18,17 @@ function getProducts() {
   });
 };
 
+function getOnlyProduct(titleProduct) {
+  return new Promise((resolve, reject) => {
+    if (!titleProduct) {
+      console.log("[ProductsController]: Product doesn't have title for search, the title product is empty");
+      reject('There is no title product');
+    }
+
+    resolve(store.only(titleProduct));
+  })
+}
+
 function updateProduct(id, changeProduct) {
   return new Promise(async (resolve, reject) => {
     if (!id || !changeProduct) {
@@ -45,6 +56,7 @@ function deleteProduct(id) {
 module.exports = {
   addProduct,
   getProducts,
+  getOnlyProduct,
   updateProduct,
   deleteProduct,
 }

@@ -4,9 +4,15 @@ const controller = require('./controller');
 const response = require('../../response/index');
 
 router.get('/', (req, res) => {
-  controller.getProducts()
-    .then((productsList) => response.success(req, res, productsList, 200))
-    .catch((error) => response.error(req, res, 'Internal Error', 500, error));
+  if (req.body.title) {
+    controller.getOnlyProduct(req.body.title)
+      .then((productsList) => response.success(req, res, productsList, 200))
+      .catch((error) => response.error(req, res, 'Internal Error', 500, error));
+  } else {
+    controller.getProducts()
+      .then((productsList) => response.success(req, res, productsList, 200))
+      .catch((error) => response.error(req, res, 'Internal Error', 500, error));
+  }
 });
 
 router.post('/', (req, res) => {
