@@ -4,13 +4,6 @@ const priceProduct = document.getElementById('price');
 const imageProduct = document.getElementById('image');
 const btnAdd = document.getElementById('btnAdd');
 
-const productValues = {
-  title: titleProduct.value,
-  description: descriptionProduct.value,
-  priceProduct: priceProduct.value,
-  imageProduct: imageProduct.value,
-}
-
 const saveANewProduct = async (product) => {
   const productData = await fetch('http://localhost:3100/products', {
     method: 'POST',
@@ -25,8 +18,16 @@ const saveANewProduct = async (product) => {
 }
 
 btnAdd.addEventListener('click', () => {
-  console.log(productValues);
+  const productValues = {
+    title: titleProduct.value,
+    description: descriptionProduct.value,
+    price: priceProduct.value,
+    image: imageProduct.value,
+  }
   saveANewProduct(productValues)
-    .then((response) => console.log(response))
+    .then((response) => {
+      console.log(response);
+      window.location.href = "./index.html";
+    })
     .catch((error) => console.log(error))
 })
