@@ -4,13 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+      img {
+        width: 300px;
+        height: 300px;
+      }
+      /*
+      .listProduct {
+        display: grid;
+        grid-template: repeat(3, minmax(100px, 250px));
+      }*/
+    </style>
   </head>
   <body>
     <div class="">
       <div class="">
         <h2>Lista de productos</h2>
+        <div id="loader"></div>
         <button id="btnAddProduct">+ Add Product</button>
+        <input type="text" id="inputSearch" />
+        <button id="btnSearch">Buscar</button>
         <div class="" id="productList"></div>
+        <div id="product"></div>
       </div>
     </div>
     <script type="module" src="./product.js"></script>

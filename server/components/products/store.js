@@ -7,9 +7,7 @@ async function addProduct(product) {
 
 async function getAllProducts() {
   const snapshot = await db.collection('products').get();
-  snapshot.forEach((doc) => {
-    console.log(doc.id);
-  });
+
   // snapshot.docs.map((product) => console.log(product.data().category.path));
   return snapshot.docs.map((product) => {
     return {
