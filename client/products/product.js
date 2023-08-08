@@ -41,10 +41,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
 setTimeout(() => {
   const btnUpdateProduct = document.getElementById('btnUpdateProduct');
+  const btnDeleteProduct = document.getElementById('btnDeleteProduct');
   if (btnUpdateProduct) {
     btnUpdateProduct.addEventListener('click', () => {
-      window.location.href = "./updateproduct.html";
+
+      const iDProduct = 'fdZnGa80PJdDHkd8tsMy';
+
+      printProductList()
+        .then((products) => {
+          const findProductID = products.message.find(idProduct => idProduct.id === iDProduct);
+
+          if (findProductID) {
+            window.location.href = "./updateproduct.html";
+          } else {
+            console.log(`Product not found`);
+          }
+        })
     })
+    if (btnDeleteProduct) {
+      btnDeleteProduct.addEventListener('click', () => {
+        printProductList()
+          .then((products) => {
+            const iDProduct = 'J46YMVzmIyjkj4UZyoVM';
+
+            // const findProductIDForDelete = products.message.find(idProduct => idProduct.id === iDProduct);
+
+            deleteProduct(iDProduct)
+              .then(() => window.location.reload())
+              .catch((error) => console.log(error));
+            // if (findProductIDForDelete) {
+            // } else {
+            //   console.log('No se pudo eliminar');
+            // }
+          })
+      })
+    }
   }
 }, 6000);
 
@@ -61,6 +92,16 @@ const getOneProduct = async (titleProduct) => {
 
   return getProduct;
 };
+
+const deleteProduct = async (id) => {
+  const deletedProduct = await fetch(`http://localhost:3100/products/${id}`, {
+    method: 'DELETE',
+  })
+
+  const deleteSuccess = await deletedProduct.json();
+
+  return deleteSuccess;
+}
 
 btnSearch.addEventListener('click', () => {
   const productDetails = inputSearch.value || '';
