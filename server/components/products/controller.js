@@ -29,6 +29,17 @@ function getOnlyProduct(titleProduct) {
   })
 }
 
+function getOnlyProductByID(id) {
+  return new Promise((resolve, reject) => {
+    if (!id) {
+      console.log("[ProductsController]: Product doesn't have id for search, the id product is empty");
+      reject('There is no id product');
+    }
+
+    resolve(store.getID(id));
+  })
+}
+
 function updateProduct(id, changeProduct) {
   return new Promise(async (resolve, reject) => {
     if (!id || !changeProduct) {
@@ -57,6 +68,7 @@ module.exports = {
   addProduct,
   getProducts,
   getOnlyProduct,
+  getOnlyProductByID,
   updateProduct,
   deleteProduct,
 }

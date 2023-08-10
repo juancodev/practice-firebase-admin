@@ -43,16 +43,22 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 productList.addEventListener("click", e => {
-  if (e.target.closest('.delete')) {
-    console.log(e.target.parentElement.id);
-    e.target.parentElement.remove();
 
-  }
+  let idProduct;
 
   if (e.target.closest('.update')) {
-    console.log(e.target.parentElement.id);
-    e.target.parentElement.remove();
+    idProduct = e.target.parentElement.id;
+    // console.log(e.target.parentElement.id);
+    // e.target.parentElement.remove();
+    window.location.href = `./updateproduct.html?id=${idProduct}`;
+  }
 
+  if (e.target.closest('.delete')) {
+    idProduct = e.target.parentElement.id;
+    console.log(e.target.parentElement.id);
+    deleteProduct(idProduct)
+      .then(() => e.target.parentElement.remove())
+      .catch((error) => console.error(error));
   }
 })
 
@@ -96,37 +102,36 @@ productList.addEventListener("click", e => {
 //   }
 // }, 6000);
 
-// btnAddProduct.addEventListener('click', () => {
-//   window.location.href = "./addproduct.html";
-// });
+btnAddProduct.addEventListener('click', () => {
+  window.location.href = "./addproduct.html";
+});
 
-// const getOneProduct = async (titleProduct) => {
-//   const oneProduct = await fetch(`http://localhost:3100/products?title=${titleProduct}`, {
-//     method: 'GET',
-//   });
+const getOneProduct = async (titleProduct) => {
+  const oneProduct = await fetch(`http://localhost:3100/products?title=${titleProduct}`, {
+    method: 'GET',
+  });
 
-//   const getProduct = await oneProduct.json();
+  const getProduct = await oneProduct.json();
 
-//   return getProduct;
-// };
+  return getProduct;
+};
 
-// const deleteProduct = async (id) => {
-//   const deletedProduct = await fetch(`http://localhost:3100/products/${id}`, {
-//     method: 'DELETE',
-//   })
+const deleteProduct = async (id) => {
+  const deletedProduct = await fetch(`http://localhost:3100/products/${id}`, {
+    method: 'DELETE',
+  })
+  const deleteSuccess = await deletedProduct.json();
 
-//   const deleteSuccess = await deletedProduct.json();
+  return deleteSuccess;
+}
 
-//   return deleteSuccess;
-// }
+btnSearch.addEventListener('click', () => {
+  const productDetails = inputSearch.value || '';
 
-// btnSearch.addEventListener('click', () => {
-//   const productDetails = inputSearch.value || '';
+  // if (inputSearch.length === 0){
 
-//   // if (inputSearch.length === 0){
-
-//   // }
-//   getOneProduct(productDetails)
-//     .then((product) => console.log(product))
-//     .catch((error) => console.error(error));
-// });
+  // }
+  getOneProduct(productDetails)
+    .then((product) => console.log(product))
+    .catch((error) => console.error(error));
+});

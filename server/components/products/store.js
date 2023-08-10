@@ -34,6 +34,18 @@ async function getOnlyProduct(title) {
   })
 }
 
+async function getOnlyProductByID(id) {
+  const productReference = db.collection('products').doc(`${id}`);
+  const snapshot = await productReference.get();
+
+  if (!snapshot.exists) {
+    console.error('No matching!!');
+    return;
+  }
+
+  return snapshot.data();
+}
+
 async function updateProduct(id, change) {
   const product = db.collection('products').doc(id);
 
@@ -52,6 +64,7 @@ module.exports = {
   add: addProduct,
   list: getAllProducts,
   only: getOnlyProduct,
+  getID: getOnlyProductByID,
   update: updateProduct,
   delete: deleteProduct,
 }
