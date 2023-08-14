@@ -4,7 +4,6 @@ const controller = require('./controller');
 const response = require('../../response/index');
 
 router.get('/', (req, res) => {
-  console.log(req.query.id);
   if (req.query.title) {
     controller.getOnlyProduct(req.query.title)
       .then((productsList) => response.success(req, res, productsList, 200))
@@ -19,13 +18,6 @@ router.get('/', (req, res) => {
       .catch((error) => response.error(req, res, 'Internal Error', 500, error));
   }
 });
-
-router.get('/', (req, res) => {
-  const id = req.query.id;
-  controller.getOnlyProductByID(id)
-    .then((productsList) => response.success(req, res, productsList, 200))
-    .catch((error) => response.error(req, res, 'Internal Error', 500, error));
-})
 
 router.post('/', (req, res) => {
   controller.addProduct(req.body)

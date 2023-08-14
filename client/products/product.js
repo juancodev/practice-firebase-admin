@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <button class="delete" id="btnDeleteProduct">Delete product</button>
           `
         const printProduct = `
-        <div id=${products.id}>
+        <div style="width: 100%; border: 1px solid red;" id=${products.id}>
           <ul class="listProduct">
             <li>Title: ${products.product.title}</li>
             <li>Description: ${products.product.description}</li>

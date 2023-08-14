@@ -19,7 +19,7 @@ const getProductByID = async (id) => {
 }
 
 const updateAProduct = async (idProduct, changeProduct) => {
-  const productData = await fetch(`http://localhost:3100/${idProduct}`, {
+  const productData = await fetch(`http://localhost:3100/products/${idProduct}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -31,10 +31,28 @@ const updateAProduct = async (idProduct, changeProduct) => {
   return resultUpdateData;
 }
 
-btnUpdate.addEventListener('click', () => {
-
-  // TODO: get data of product by id
+document.addEventListener('DOMContentLoaded', () => {
   getProductByID(productID)
-    .then((response) => console.log(response))
+    .then((returnProduct) => {
+      titleProduct.value = returnProduct.message.title;
+      descriptionProduct.value = returnProduct.message.description;
+      priceProduct.value = returnProduct.message.price;
+      imageProduct.value = returnProduct.message.image;
+    })
     .catch((error) => console.error(error));
+})
+
+btnUpdate.addEventListener('click', () => {
+  const titleUpdate = titleProduct.value;
+  const descriptionUpdate = descriptionProduct.value;
+  const priceUpdate = priceProduct.value;
+  const imageUpdate = imageProduct.value;
+
+  const changeProduct = {
+    title: titleUpdate,
+    price: priceUpdate,
+  }
+  updateAProduct(productID, changeProduct)
+    .then((response) => console.log(response))
+    .catch((error) => console.log(error));
 })
