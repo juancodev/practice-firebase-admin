@@ -50,9 +50,11 @@ btnUpdate.addEventListener('click', () => {
 
   const changeProduct = {
     title: titleUpdate,
+    description: descriptionUpdate,
     price: priceUpdate,
+    image: imageUpdate,
   }
   updateAProduct(productID, changeProduct)
-    .then((response) => console.log(response))
+    .then(() => window.location.href = './index.html')
     .catch((error) => console.log(error));
 })
