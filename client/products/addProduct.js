@@ -18,32 +18,39 @@ const saveANewProduct = async (product) => {
   return newProduct;
 }
 
-form.addEventListener('submit', (event) => {
+console.log(form);
+
+document.addEventListener('submit', (event) => {
   event.preventDefault();
 
   const formData = new FormData(form);
 
+  console.log(formData);
+
   fetch('https://api.imgur.com/3/image', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'accept': '*/*',
+        'Content-Type': 'multipart/form-data',
         'Authorization': `Client-ID ${clientID}`
       },
       body: formData
     })
-    .then((response) => console.log(response))
-    .catch((error) => console.log(error));
-
-  // const productValues = {
-  //   title: titleProduct.value,
-  //   description: descriptionProduct.value,
-  //   price: priceProduct.value,
-  //   image: imageProduct.value,
-  // }
-  // saveANewProduct(productValues)
-  //   .then((response) => {
-  //     console.log(response);
-  //     window.location.href = "./index.html";
-  //   })
-  //   .catch((error) => console.log(error))
+    .then((response) => {
+      response.json().then(data => console.log(data))
+    }).catch((err) => console.log(err))
 })
+
+const productValues = {
+  title: titleProduct.value,
+  description: descriptionProduct.value,
+  price: priceProduct.value,
+  image: imageProduct.value,
+}
+console.log(productValues)
+// saveANewProduct(productValues)
+//   .then((response) => {
+//     console.log(response);
+//     window.location.href = "./index.html";
+//   })
+//   .catch((error) => console.log(error))
