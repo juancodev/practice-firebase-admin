@@ -1,6 +1,5 @@
 const {
-  auth,
-  db
+  auth
 } = require('./model');
 
 // add user in Auth
@@ -14,11 +13,11 @@ async function addPermissions(uid, objectRole) {
   return await auth.setCustomUserClaims(uid, objectRole);
 }
 
-// save user in Firestore
-async function saveUserInFiretore(userData) {
-  const docRef = db.collection('users')
-  return await docRef.add(userData);
+// Token generate
+async function customToken(uid) {
+  return await auth.createCustomToken(uid);
 }
+
 
 function getUsers(email) {
 
@@ -36,7 +35,7 @@ function getUsers(email) {
 
 module.exports = {
   add: addUser,
-  save: saveUserInFiretore,
   role: addPermissions,
+  customToken: customToken,
   list: getUsers,
 }

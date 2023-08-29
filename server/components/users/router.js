@@ -17,9 +17,7 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   controller.addUser(req.body)
-    .then((user) => response.success(req, res, user, 201)) // esta línea es para guardar en Auth
-    .then(() => controller.saveUser(req.body) // esta línea es para guardar en Firestore
-      .then(() => console.log('successfully')))
+    .then((user) => response.success(req, res, user, 201)) // This line is to save in Auth
     .catch((error) => response.error(req, res, 'Internal Error', 500, error));
 });
 
