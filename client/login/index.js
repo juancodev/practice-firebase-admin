@@ -20,6 +20,13 @@ TODO: // 👇🏼 validate token in routers
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => {
+        fetch('http://localhost:3100/login', {
+          method: 'POST',
+          headers: {
+            authorization: 'Bearer ' + userCredentials._tokenResponse.idToken,
+            'Content-Type': 'application/json',
+          },
+        })
         console.log(userCredentials._tokenResponse.idToken);
         const user = userCredentials.user;
         console.log(user);
