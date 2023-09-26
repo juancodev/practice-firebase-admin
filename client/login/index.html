@@ -6,12 +6,16 @@
     <title>Document</title>
   </head>
   <body>
-    <form id="signin">
+    <form id="signIn">
       <label for="">Email</label>
       <input type="text" placeholder="Email@example.com" name="email" />
       <label for="">Password</label>
-      <input type="password" placeholder="******" name="password" />
-      <button>Iniciar Sesión</button>
+      <input type="text" placeholder="******" name="password" />
+      <label for="admin">administrator</label>
+      <input type="radio" name="admin" id="admin" />
+      <label for="user">user</label>
+      <input type="radio" name="user" id="user" />
+      <button type="submit">Iniciar Sesión</button>
     </form>
     <script type="module" src="./index.js"></script>
   </body>

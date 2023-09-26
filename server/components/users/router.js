@@ -16,6 +16,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
+  console.log(req.body);
   controller.addUser(req.body)
     .then((user) => response.success(req, res, user, 201)) // This line is to save in Auth
     .catch((error) => response.error(req, res, 'Internal Error', 500, error));

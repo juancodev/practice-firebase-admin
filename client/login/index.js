@@ -1,34 +1,65 @@
 import {
   getAuth,
   signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
   onAuthStateChanged
 } from 'https://www.gstatic.com/firebasejs/10.3.0/firebase-auth.js'
 import {
   app
 } from '../firebase/firebase.config.client.js';
 
-const signin = document.getElementById('signin');
+const signIn = document.getElementById('signIn');
+
+const registerNewUser = async (userData) => {
+  const aNewUserData = await fetch('http://localhost:3100/users', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(userData),
+  });
+  const user = await aNewUserData.json();
+  return user;
+}
+
+
 
 const auth = getAuth(app);
 
 TODO: // 👇🏼 validate token in routers
-  signin.addEventListener('submit', (event) => {
+  signIn.addEventListener('submit', (event) => {
     event.preventDefault();
 
     const email = event.target.email.value;
     const password = event.target.password.value;
+    const roleAdmin = event.target.admin;
+    const roleUser = event.target.user;
+    const userLogged = {
+      email,
+      password
+    }
 
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredentials) => {
-        fetch('http://localhost:3100/login', {
-          method: 'POST',
-          headers: {
-            authorization: 'Bearer ' + userCredentials._tokenResponse.idToken,
-            'Content-Type': 'application/json',
-          },
-        })
-        window.location.href = '../dashboard'
+    if (roleAdmin.checked) {
+      roleUser.removeAttribute('checked');
+      userLogged.role = roleAdmin.name;
+    } else {
+      roleAdmin.removeAttribute("checked");
+      userLogged.role = roleUser.name;
+    }
+
+
+    // signInWithEmailAndPassword(auth, email, password)
+    //   .then((userCredentials) => {
+    //     console.log(userCredentials._tokenResponse.idToken);
+    //     const user = userCredentials.user;
+    //     console.log(user);
+    //   })
+    //   .catch((error) => console.log(error));
+
+    // register
+    registerNewUser(userLogged)
+      .then((response) => {
+        console.log(response);
       })
-      .catch((error) => console.log(error));
-
+      .catch((error) => console.log(error))
   })

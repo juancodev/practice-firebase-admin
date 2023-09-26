@@ -12,7 +12,7 @@ function addUser(userData) {
         store.customToken(userRecord.uid)
           .then((tokenGenerated) => console.log(tokenGenerated))
         store.role(userRecord.uid, {
-            admin: true
+            role: userData.role
           })
           .then((userRole) => console.log(userRole))
       })
