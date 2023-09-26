@@ -27,27 +27,35 @@ document.addEventListener('submit', (event) => {
 
   console.log(formData);
 
-  fetch('https://api.imgur.com/3/image', {
-      method: 'POST',
-      headers: {
-        'accept': '*/*',
-        'Content-Type': 'multipart/form-data',
-        'Authorization': `Client-ID ${clientID}`
-      },
-      body: formData
-    })
+  // fetch('https://api.imgur.com/3/image', {
+  //     method: 'POST',
+  //     headers: {
+  //       'accept': '*/*',
+  //       'Content-Type': 'multipart/form-data',
+  //       'Authorization': `Client-ID ${clientID}`
+  //     },
+  //     body: formData
+  //   })
+  //   .then((response) => {
+  //     response.json().then(data => console.log(data))
+  //   }).catch((err) => console.log(err))
+
+  const productValues = {
+    title: titleProduct.value,
+    description: descriptionProduct.value,
+    price: priceProduct.value,
+    image: imageProduct.value,
+  }
+
+  saveANewProduct(productValues)
     .then((response) => {
-      response.json().then(data => console.log(data))
-    }).catch((err) => console.log(err))
+      console.log(response);
+      window.location.href = "./index.html";
+    })
+    .catch((error) => console.log(error))
 })
 
-const productValues = {
-  title: titleProduct.value,
-  description: descriptionProduct.value,
-  price: priceProduct.value,
-  image: imageProduct.value,
-}
-console.log(productValues)
+// console.log(productValues)
 // saveANewProduct(productValues)
 //   .then((response) => {
 //     console.log(response);

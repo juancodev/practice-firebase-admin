@@ -27,9 +27,7 @@ TODO: // 👇🏼 validate token in routers
             'Content-Type': 'application/json',
           },
         })
-        console.log(userCredentials._tokenResponse.idToken);
-        const user = userCredentials.user;
-        console.log(user);
+        window.location.href = '../dashboard'
       })
       .catch((error) => console.log(error));
 
