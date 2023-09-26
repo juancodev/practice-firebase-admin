@@ -39,6 +39,7 @@ TODO: // 👇🏼 validate token in routers
       password
     }
 
+<<<<<<< HEAD
     if (roleAdmin.checked) {
       roleUser.removeAttribute('checked');
       userLogged.role = roleAdmin.name;
@@ -60,6 +61,20 @@ TODO: // 👇🏼 validate token in routers
     registerNewUser(userLogged)
       .then((response) => {
         console.log(response);
+=======
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredentials) => {
+        fetch('http://localhost:3100/login', {
+          method: 'POST',
+          headers: {
+            authorization: 'Bearer ' + userCredentials._tokenResponse.idToken,
+            'Content-Type': 'application/json',
+          },
+        })
+        console.log(userCredentials._tokenResponse.idToken);
+        const user = userCredentials.user;
+        console.log(user);
+>>>>>>> refs/remotes/origin/main
       })
       .catch((error) => console.log(error))
   })

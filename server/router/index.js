@@ -2,12 +2,14 @@ const express = require('express');
 const router = express.Router();
 const products = require('../components/products/router');
 const users = require('../components/users/router');
+const login = require('../components/login/router');
 // const dashboard = require('../components/dashboard/router');
 
 function routerApp(app) {
   app.use('/', router);
   app.use('/products', products);
   app.use('/users', users);
+  app.use('/login', login);
   // app.use('/dashboard', dashboard);
 }
 
