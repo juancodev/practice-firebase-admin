@@ -1,8 +1,8 @@
 import {
   getAuth,
   signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  onAuthStateChanged
+  setPersistence,
+  browserSessionPersistence,
 } from 'https://www.gstatic.com/firebasejs/10.3.0/firebase-auth.js'
 import {
   app
@@ -22,44 +22,61 @@ const registerNewUser = async (userData) => {
   return user;
 }
 
+const loginUser = async (token) => {
+  const userLoggedSuccess = await fetch('http://localhost:3100/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+  });
+
+  const user = await userLoggedSuccess.json();
+  return user;
+}
+
 
 
 const auth = getAuth(app);
 
-TODO: // 👇🏼 validate token in routers
-  signIn.addEventListener('submit', (event) => {
-    event.preventDefault();
+signIn.addEventListener('submit', (event) => {
+  event.preventDefault();
 
-    const email = event.target.email.value;
-    const password = event.target.password.value;
-    const roleAdmin = event.target.admin;
-    const roleUser = event.target.user;
-    const userLogged = {
-      email,
-      password
-    }
+  const email = event.target.email.value;
+  const password = event.target.password.value;
+  const roleAdmin = event.target.admin;
+  const roleUser = event.target.user;
+  const userLogged = {
+    email,
+    password
+  }
 
-    if (roleAdmin.checked) {
-      roleUser.removeAttribute('checked');
-      userLogged.role = roleAdmin.name;
-    } else {
-      roleAdmin.removeAttribute("checked");
-      userLogged.role = roleUser.name;
-    }
+  if (roleAdmin.checked) {
+    roleUser.removeAttribute('checked');
+    userLogged.role = roleAdmin.name;
+  } else {
+    roleAdmin.removeAttribute("checked");
+    userLogged.role = roleUser.name;
+  }
 
+  //login
+  TODO: // 👇🏼 validate token in routers
+    setPersistence(auth, browserSessionPersistence)
+    .then(() => {
+      return signInWithEmailAndPassword(auth, email, password)
+        .then((userCredentials) => {
+          loginUser(userCredentials._tokenResponse.idToken)
+            .then((user) => console.log(user)) // 👈🏼 token
+          const user = userCredentials.user;
+          console.log(user);
+        })
+    })
+    .catch((error) => console.log(error));
 
-    // signInWithEmailAndPassword(auth, email, password)
-    //   .then((userCredentials) => {
-    //     console.log(userCredentials._tokenResponse.idToken);
-    //     const user = userCredentials.user;
-    //     console.log(user);
-    //   })
-    //   .catch((error) => console.log(error));
-
-    // register
-    registerNewUser(userLogged)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => console.log(error))
-  })
+  // register
+  // registerNewUser(userLogged)
+  //   .then((response) => {
+  //     console.log(response);
+  //   })
+  //   .catch((error) => console.log(error))
+})

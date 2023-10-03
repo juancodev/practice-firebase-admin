@@ -4,18 +4,21 @@ const controller = require('./controller');
 const response = require('../../response/index');
 
 router.get('/', (req, res) => {
-  if (req.query.title) {
-    controller.getOnlyProduct(req.query.title)
-      .then((productsList) => response.success(req, res, productsList, 200))
-      .catch((error) => response.error(req, res, 'Internal Error', 500, error));
-  } else if (req.query.id) {
-    controller.getOnlyProductByID(req.query.id)
-      .then((productsList) => response.success(req, res, productsList, 200))
-      .catch((error) => response.error(req, res, 'Internal Error', 500, error));
-  } else {
-    controller.getProducts()
-      .then((productsList) => response.success(req, res, productsList, 200))
-      .catch((error) => response.error(req, res, 'Internal Error', 500, error));
+  const authorization = req.headers.authorization;
+  if (authorization) {
+    if (req.query.title) {
+      controller.getOnlyProduct(req.query.title)
+        .then((productsList) => response.success(req, res, productsList, 200))
+        .catch((error) => response.error(req, res, 'Internal Error', 500, error));
+    } else if (req.query.id) {
+      controller.getOnlyProductByID(req.query.id)
+        .then((productsList) => response.success(req, res, productsList, 200))
+        .catch((error) => response.error(req, res, 'Internal Error', 500, error));
+    } else {
+      controller.getProducts()
+        .then((productsList) => response.success(req, res, productsList, 200))
+        .catch((error) => response.error(req, res, 'Internal Error', 500, error));
+    }
   }
 });
 
