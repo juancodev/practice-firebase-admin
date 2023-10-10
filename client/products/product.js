@@ -1,11 +1,40 @@
+// import {
+//   getAuth,
+//   onAuthStateChanged
+// } from 'https://www.gstatic.com/firebasejs/10.3.0/firebase-auth.js'
+// import {
+//   app
+// } from '../firebase/firebase.config.client.js';
+
+
 const productList = document.getElementById('productList');
 const btnAddProduct = document.getElementById('btnAddProduct');
 const inputSearch = document.getElementById('inputSearch');
 const btnSearch = document.getElementById('btnSearch');
+// let token;
+
+// const getToken = new Promise((resolve, reject) => {
+//   return onAuthStateChanged(getAuth(app), async user => {
+//     resolve(user.accessToken);
+//   })
+// });
+
+const getTokenOnSessionStorage = window.sessionStorage.getItem('firebase:authUser:AIzaSyAD7ocAYXeaoywqVVAkYPk0kgCwg-0gshQ:[DEFAULT]')
+
+
+const getToken = JSON.parse(getTokenOnSessionStorage);
+
+const token = getToken.stsTokenManager.accessToken;
+
+console.log(token);
+
 
 const printProductList = async () => {
   const dataList = await fetch('http://localhost:3100/products', {
     method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
   });
   const dataResult = await dataList.json();
   console.log(dataResult);

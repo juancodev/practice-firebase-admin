@@ -71,7 +71,7 @@ signIn.addEventListener('submit', (event) => {
           loginUser(token)
             .then((user) => {
               console.log(user)
-              // window.location.href = 'http://localhost:3100/products';
+              window.location.href = '../products/index.html';
             }) // 👈🏼 token
           const user = userCredentials.user;
           console.log(user);
